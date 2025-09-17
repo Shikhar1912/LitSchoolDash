@@ -1,5 +1,4 @@
 import type { Profile, SocialLink } from "@/api";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 
 type Props = {
@@ -60,15 +59,7 @@ const iconFor = (platform: SocialLink["platform"]) => {
 
 export default function ProfileInfo({ profile }: Props) {
   return (
-    <section className="flex flex-col gap-4 mt-10 mb-6">
-      <div>
-        <Avatar className="w-24 h-24 ring-2 ring-background">
-          <AvatarImage src={profile.avatarUrl} alt={profile.name} />
-          <AvatarFallback className="w-24 h-24">
-            {profile.name?.[0]}
-          </AvatarFallback>
-        </Avatar>
-      </div>
+    <section className="flex flex-col gap-4 mt-12 md:mt-16 mb-6 pl-0 md:pl-40">
       <div>
         <div className="flex gap-3 items-center">
           <h1 className="text-2xl font-semibold">{profile.name}</h1>
