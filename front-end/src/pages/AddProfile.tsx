@@ -1153,6 +1153,23 @@ export default function AddProfile() {
                           required
                         />
                       </div>
+                      <div className="md:col-span-2">
+                        <Label>Keywords (comma-separated)</Label>
+                        <Input
+                          value={endorsement.keywords?.join(", ") || ""}
+                          onChange={(e) => {
+                            const keywords = e.target.value
+                              .split(",")
+                              .map((k) => k.trim())
+                              .filter((k) => k.length > 0);
+                            updateEndorsement(index, "keywords", keywords);
+                          }}
+                          placeholder="e.g., Leadership, React, Cloud Technologies, Mentoring"
+                        />
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Separate multiple keywords with commas
+                        </p>
+                      </div>
                     </div>
                   </Card>
                 ))}
