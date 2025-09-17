@@ -23,21 +23,29 @@ export default function Highlights({ highlights }: Props) {
   if (!highlights || highlights.length === 0) return null;
 
   return (
-    <section className="mt-6">
+    <section className="mt-6 px-0 sm:px-0">
       <h2 className="text-lg font-semibold mb-3">Highlights</h2>
       <div className="grid gap-3">
         {highlights.map((h) => (
-          <Card key={h.id}>
-            <CardContent className="">
+          <Card key={h.id} className="overflow-hidden">
+            <CardContent className="p-4">
               <div className="flex items-start gap-3">
-                <div className="text-2xl">{h.icon}</div>
+                <div className="text-xl sm:text-2xl flex-shrink-0">
+                  {h.icon}
+                </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-medium truncate">{h.title}</h3>
-                    <Badge className={getTypeColor(h.type)}>{h.type}</Badge>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
+                    <h3 className="font-medium text-sm sm:text-base break-words">
+                      {h.title}
+                    </h3>
+                    <Badge
+                      className={`text-xs ${getTypeColor(h.type)} self-start`}
+                    >
+                      {h.type}
+                    </Badge>
                   </div>
                   {h.description ? (
-                    <p className="text-sm text-muted-foreground mb-2">
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-2 break-words">
                       {h.description}
                     </p>
                   ) : null}

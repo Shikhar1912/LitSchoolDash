@@ -73,8 +73,8 @@ export default function Profile() {
     <>
       <Navbar />
       <CoverImage profile={data.profile} />
-      <div className="mx-auto px-12 py-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-18 mt-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-12 py-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-18 mt-8">
           <div className="lg:col-span-2">
             <ProfileInfo profile={data.profile} />
             <Experiences experiences={data.experiences} />

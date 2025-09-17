@@ -61,33 +61,37 @@ export default function ProfileInfo({ profile }: Props) {
   return (
     <section className="flex flex-col gap-4 mt-12 md:mt-16 mb-6 pl-0">
       <div>
-        <div className="flex gap-3 items-center">
-          <h1 className="text-2xl font-semibold">{profile.name}</h1>
-          <div className="hidden sm:block">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <h1 className="text-xl sm:text-2xl font-semibold break-words">
+            {profile.name}
+          </h1>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             {profile.college ? (
-              <Badge className="mt-0.5">{profile.college}</Badge>
+              <Badge className="text-xs sm:text-sm">{profile.college}</Badge>
+            ) : null}
+
+            {profile.socials && profile.socials.length > 0 ? (
+              <div className="flex gap-2 sm:gap-3">
+                {profile.socials.map((s) => (
+                  <a
+                    key={s.platform}
+                    href={s.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-secondary text-foreground hover:bg-accent transition"
+                  >
+                    {iconFor(s.platform)}
+                  </a>
+                ))}
+              </div>
             ) : null}
           </div>
-
-          {profile.socials && profile.socials.length > 0 ? (
-            <div className="flex gap-3">
-              {profile.socials.map((s) => (
-                <a
-                  key={s.platform}
-                  href={s.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-secondary text-foreground hover:bg-accent transition"
-                >
-                  {iconFor(s.platform)}
-                </a>
-              ))}
-            </div>
-          ) : null}
         </div>
 
         {profile.bio ? (
-          <p className="text-sm mt-2 max-w-3xl">{profile.bio}</p>
+          <p className="text-xs sm:text-sm mt-2 max-w-3xl break-words">
+            {profile.bio}
+          </p>
         ) : null}
       </div>
     </section>
