@@ -108,6 +108,24 @@ CREATE TABLE epics (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Create competitions table
+CREATE TABLE competitions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  profile_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  title TEXT NOT NULL,
+  organization TEXT NOT NULL,
+  date_range TEXT NOT NULL,
+  category TEXT NOT NULL,
+  participants INTEGER DEFAULT 0,
+  rounds INTEGER DEFAULT 0,
+  judges INTEGER DEFAULT 0,
+  prize TEXT,
+  position TEXT,
+  color TEXT DEFAULT '#3b82f6',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Create highlights table
 CREATE TABLE highlights (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -147,6 +165,7 @@ CREATE POLICY "Allow public read access" ON skills FOR SELECT USING (true);
 CREATE POLICY "Allow public read access" ON social_links FOR SELECT USING (true);
 CREATE POLICY "Allow public read access" ON endorsements FOR SELECT USING (true);
 CREATE POLICY "Allow public read access" ON epics FOR SELECT USING (true);
+CREATE POLICY "Allow public read access" ON competitions FOR SELECT USING (true);
 CREATE POLICY "Allow public read access" ON highlights FOR SELECT USING (true);
 CREATE POLICY "Allow public read access" ON interests FOR SELECT USING (true);
 
@@ -156,6 +175,7 @@ CREATE POLICY "Allow public insert access" ON skills FOR INSERT WITH CHECK (true
 CREATE POLICY "Allow public insert access" ON social_links FOR INSERT WITH CHECK (true);
 CREATE POLICY "Allow public insert access" ON endorsements FOR INSERT WITH CHECK (true);
 CREATE POLICY "Allow public insert access" ON epics FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public insert access" ON competitions FOR INSERT WITH CHECK (true);
 CREATE POLICY "Allow public insert access" ON highlights FOR INSERT WITH CHECK (true);
 CREATE POLICY "Allow public insert access" ON interests FOR INSERT WITH CHECK (true);
 ```

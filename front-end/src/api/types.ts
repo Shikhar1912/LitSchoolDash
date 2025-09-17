@@ -60,6 +60,7 @@ export type ProfileBundle = {
     topRated: number;
   };
   epics?: Epic[];
+  competitions?: Competition[];
   highlights?: Highlight[];
 };
 
@@ -73,6 +74,20 @@ export type Epic = {
   rounds?: number;
   judges?: number;
   badge?: string; // e.g., 1st Place, Runner Up
+  color?: string; // left rail color
+};
+
+export type Competition = {
+  id: string;
+  title: string;
+  organization: string;
+  dateRange: string;
+  category: string; // e.g., coding, design, business
+  participants?: number;
+  rounds?: number;
+  judges?: number;
+  prize?: string; // e.g., $10,000, Trophy
+  position?: string; // e.g., 1st Place, Runner Up
   color?: string; // left rail color
 };
 

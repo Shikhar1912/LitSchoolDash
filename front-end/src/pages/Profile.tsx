@@ -14,6 +14,7 @@ import Endorsements from "../components/profile/Endorsements";
 import StatsSummary from "../components/profile/StatsSummary";
 import TabsPills from "../components/profile/TabsPills";
 import EpicsList from "../components/profile/EpicsList";
+import CompetitionsList from "../components/profile/CompetitionsList";
 import Navbar from "../components/profile/Navbar";
 import Highlights from "../components/profile/Highlights";
 
@@ -21,6 +22,7 @@ export default function Profile() {
   const [data, setData] = useState<ProfileBundle | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"epics" | "competitions">("epics");
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("id");
 
@@ -85,8 +87,17 @@ export default function Profile() {
                 topRated={data.summary.topRated}
               />
             ) : null}
-            <TabsPills epicsCount={8} competitionsCount={11} />
-            <EpicsList epics={data.epics ?? []} />
+            <TabsPills
+              epicsCount={data.epics?.length ?? 0}
+              competitionsCount={data.competitions?.length ?? 0}
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+            />
+            {activeTab === "epics" ? (
+              <EpicsList epics={data.epics ?? []} />
+            ) : (
+              <CompetitionsList competitions={data.competitions ?? []} />
+            )}
             <Highlights highlights={data.highlights ?? []} />
           </div>
           <div className="lg:col-span-1">

@@ -34,6 +34,18 @@ interface FormData {
     badge?: string;
     color: string;
   }>;
+  competitions: Array<{
+    title: string;
+    organization: string;
+    dateRange: string;
+    category: string;
+    participants: number;
+    rounds: number;
+    judges: number;
+    prize?: string;
+    position?: string;
+    color: string;
+  }>;
   highlights: Array<{
     title: string;
     description: string;
@@ -58,6 +70,7 @@ const initialFormData: FormData = {
   endorsements: [],
   interests: [],
   epics: [],
+  competitions: [],
   highlights: [],
 };
 
@@ -196,6 +209,44 @@ export default function AddProfile() {
           judges: 5,
           badge: "Runner Up",
           color: "#3b82f6",
+        },
+      ],
+      competitions: [
+        {
+          title: "Hackathon 2023",
+          organization: "Tech University",
+          dateRange: "15 March, 2023 – 17 March, 2023",
+          category: "Coding",
+          participants: 150,
+          rounds: 3,
+          judges: 8,
+          prize: "$5,000",
+          position: "1st Place",
+          color: "#10b981",
+        },
+        {
+          title: "Design Challenge",
+          organization: "Creative Studio",
+          dateRange: "10 June, 2023 – 12 June, 2023",
+          category: "Design",
+          participants: 80,
+          rounds: 2,
+          judges: 5,
+          prize: "Trophy + $2,000",
+          position: "Runner Up",
+          color: "#3b82f6",
+        },
+        {
+          title: "Business Plan Competition",
+          organization: "Entrepreneurship Hub",
+          dateRange: "5 September, 2023 – 7 September, 2023",
+          category: "Business",
+          participants: 60,
+          rounds: 4,
+          judges: 6,
+          prize: "$10,000",
+          position: "3rd Place",
+          color: "#f59e0b",
         },
       ],
       highlights: [
@@ -634,6 +685,29 @@ export default function AddProfile() {
         );
 
         if (epicsError) throw epicsError;
+      }
+
+      // Create competitions
+      if (formData.competitions.length > 0) {
+        const { error: competitionsError } = await supabase
+          .from("competitions")
+          .insert(
+            formData.competitions.map((competition) => ({
+              profile_id: profileId,
+              title: competition.title,
+              organization: competition.organization,
+              date_range: competition.dateRange,
+              category: competition.category,
+              participants: competition.participants,
+              rounds: competition.rounds,
+              judges: competition.judges,
+              prize: competition.prize,
+              position: competition.position,
+              color: competition.color,
+            }))
+          );
+
+        if (competitionsError) throw competitionsError;
       }
 
       // Create highlights
@@ -1298,6 +1372,251 @@ export default function AddProfile() {
                             setFormData((prev) => ({
                               ...prev,
                               epics: newEpics,
+                            }));
+                          }}
+                          className="w-full h-10"
+                        />
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Competitions */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">Competitions</h3>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setFormData((prev) => ({
+                        ...prev,
+                        competitions: [
+                          ...prev.competitions,
+                          {
+                            title: "",
+                            organization: "",
+                            dateRange: "",
+                            category: "",
+                            participants: 0,
+                            rounds: 0,
+                            judges: 0,
+                            prize: "",
+                            position: "",
+                            color: "#3b82f6",
+                          },
+                        ],
+                      }));
+                    }}
+                    variant="outline"
+                    size="sm"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Competition
+                  </Button>
+                </div>
+                {formData.competitions.map((competition, index) => (
+                  <Card key={index} className="p-4">
+                    <div className="flex justify-between items-start mb-4">
+                      <h4 className="font-medium">Competition {index + 1}</h4>
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            competitions: prev.competitions.filter(
+                              (_, i) => i !== index
+                            ),
+                          }));
+                        }}
+                        variant="ghost"
+                        size="sm"
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label>Title *</Label>
+                        <Input
+                          value={competition.title}
+                          onChange={(e) => {
+                            const newCompetitions = [...formData.competitions];
+                            newCompetitions[index] = {
+                              ...competition,
+                              title: e.target.value,
+                            };
+                            setFormData((prev) => ({
+                              ...prev,
+                              competitions: newCompetitions,
+                            }));
+                          }}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label>Organization *</Label>
+                        <Input
+                          value={competition.organization}
+                          onChange={(e) => {
+                            const newCompetitions = [...formData.competitions];
+                            newCompetitions[index] = {
+                              ...competition,
+                              organization: e.target.value,
+                            };
+                            setFormData((prev) => ({
+                              ...prev,
+                              competitions: newCompetitions,
+                            }));
+                          }}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label>Date Range *</Label>
+                        <Input
+                          value={competition.dateRange}
+                          onChange={(e) => {
+                            const newCompetitions = [...formData.competitions];
+                            newCompetitions[index] = {
+                              ...competition,
+                              dateRange: e.target.value,
+                            };
+                            setFormData((prev) => ({
+                              ...prev,
+                              competitions: newCompetitions,
+                            }));
+                          }}
+                          placeholder="e.g., 15 March, 2023 – 17 March, 2023"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label>Category *</Label>
+                        <Input
+                          value={competition.category}
+                          onChange={(e) => {
+                            const newCompetitions = [...formData.competitions];
+                            newCompetitions[index] = {
+                              ...competition,
+                              category: e.target.value,
+                            };
+                            setFormData((prev) => ({
+                              ...prev,
+                              competitions: newCompetitions,
+                            }));
+                          }}
+                          placeholder="e.g., Coding, Design, Business"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label>Participants</Label>
+                        <Input
+                          type="number"
+                          min="0"
+                          value={competition.participants}
+                          onChange={(e) => {
+                            const newCompetitions = [...formData.competitions];
+                            newCompetitions[index] = {
+                              ...competition,
+                              participants: parseInt(e.target.value) || 0,
+                            };
+                            setFormData((prev) => ({
+                              ...prev,
+                              competitions: newCompetitions,
+                            }));
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <Label>Rounds</Label>
+                        <Input
+                          type="number"
+                          min="0"
+                          value={competition.rounds}
+                          onChange={(e) => {
+                            const newCompetitions = [...formData.competitions];
+                            newCompetitions[index] = {
+                              ...competition,
+                              rounds: parseInt(e.target.value) || 0,
+                            };
+                            setFormData((prev) => ({
+                              ...prev,
+                              competitions: newCompetitions,
+                            }));
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <Label>Judges</Label>
+                        <Input
+                          type="number"
+                          min="0"
+                          value={competition.judges}
+                          onChange={(e) => {
+                            const newCompetitions = [...formData.competitions];
+                            newCompetitions[index] = {
+                              ...competition,
+                              judges: parseInt(e.target.value) || 0,
+                            };
+                            setFormData((prev) => ({
+                              ...prev,
+                              competitions: newCompetitions,
+                            }));
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <Label>Prize (Optional)</Label>
+                        <Input
+                          value={competition.prize || ""}
+                          onChange={(e) => {
+                            const newCompetitions = [...formData.competitions];
+                            newCompetitions[index] = {
+                              ...competition,
+                              prize: e.target.value,
+                            };
+                            setFormData((prev) => ({
+                              ...prev,
+                              competitions: newCompetitions,
+                            }));
+                          }}
+                          placeholder="e.g., $5,000, Trophy"
+                        />
+                      </div>
+                      <div>
+                        <Label>Position (Optional)</Label>
+                        <Input
+                          value={competition.position || ""}
+                          onChange={(e) => {
+                            const newCompetitions = [...formData.competitions];
+                            newCompetitions[index] = {
+                              ...competition,
+                              position: e.target.value,
+                            };
+                            setFormData((prev) => ({
+                              ...prev,
+                              competitions: newCompetitions,
+                            }));
+                          }}
+                          placeholder="e.g., 1st Place, Runner Up"
+                        />
+                      </div>
+                      <div>
+                        <Label>Color</Label>
+                        <Input
+                          type="color"
+                          value={competition.color}
+                          onChange={(e) => {
+                            const newCompetitions = [...formData.competitions];
+                            newCompetitions[index] = {
+                              ...competition,
+                              color: e.target.value,
+                            };
+                            setFormData((prev) => ({
+                              ...prev,
+                              competitions: newCompetitions,
                             }));
                           }}
                           className="w-full h-10"

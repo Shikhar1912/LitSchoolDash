@@ -70,6 +70,17 @@ export const fetchProfileBundleById = async (
       console.error("Error fetching epics:", epicsError);
     }
 
+    // Fetch competitions
+    const { data: competitions, error: competitionsError } = await supabase
+      .from("competitions")
+      .select("*")
+      .eq("profile_id", profileId)
+      .order("created_at", { ascending: false });
+
+    if (competitionsError) {
+      console.error("Error fetching competitions:", competitionsError);
+    }
+
     // Fetch highlights
     const { data: highlights, error: highlightsError } = await supabase
       .from("highlights")
@@ -153,6 +164,20 @@ export const fetchProfileBundleById = async (
           judges: epic.judges,
           badge: epic.badge,
           color: epic.color,
+        })) || [],
+      competitions:
+        competitions?.map((competition) => ({
+          id: competition.id,
+          title: competition.title,
+          organization: competition.organization,
+          dateRange: competition.date_range,
+          category: competition.category,
+          participants: competition.participants,
+          rounds: competition.rounds,
+          judges: competition.judges,
+          prize: competition.prize,
+          position: competition.position,
+          color: competition.color,
         })) || [],
       highlights:
         highlights?.map((highlight) => ({

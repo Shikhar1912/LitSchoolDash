@@ -1,20 +1,53 @@
 type Props = {
   epicsCount: number;
   competitionsCount: number;
+  activeTab: "epics" | "competitions";
+  onTabChange: (tab: "epics" | "competitions") => void;
 };
 
-export default function TabsPills({ epicsCount, competitionsCount }: Props) {
+export default function TabsPills({
+  epicsCount,
+  competitionsCount,
+  activeTab,
+  onTabChange,
+}: Props) {
   return (
     <section className="mt-6 flex items-center gap-3">
-      <button className="px-5 py-2 rounded-full bg-primary text-primary-foreground font-medium">
+      <button
+        onClick={() => onTabChange("epics")}
+        className={`px-5 py-2 rounded-full font-medium transition-colors ${
+          activeTab === "epics"
+            ? "bg-primary text-primary-foreground"
+            : "bg-secondary hover:bg-secondary/80"
+        }`}
+      >
         Epics{" "}
-        <span className="ml-2 text-xs rounded-full bg-primary-foreground/20 px-2 py-0.5">
+        <span
+          className={`ml-2 text-xs rounded-full px-2 py-0.5 ${
+            activeTab === "epics"
+              ? "bg-primary-foreground/20"
+              : "bg-foreground/10"
+          }`}
+        >
           {epicsCount}
         </span>
       </button>
-      <button className="px-5 py-2 rounded-full bg-secondary">
+      <button
+        onClick={() => onTabChange("competitions")}
+        className={`px-5 py-2 rounded-full font-medium transition-colors ${
+          activeTab === "competitions"
+            ? "bg-primary text-primary-foreground"
+            : "bg-secondary hover:bg-secondary/80"
+        }`}
+      >
         Competitions{" "}
-        <span className="ml-2 text-xs rounded-full bg-foreground/10 px-2 py-0.5">
+        <span
+          className={`ml-2 text-xs rounded-full px-2 py-0.5 ${
+            activeTab === "competitions"
+              ? "bg-primary-foreground/20"
+              : "bg-foreground/10"
+          }`}
+        >
           {competitionsCount}
         </span>
       </button>
