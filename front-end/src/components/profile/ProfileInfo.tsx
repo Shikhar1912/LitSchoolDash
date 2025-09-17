@@ -59,7 +59,7 @@ const iconFor = (platform: SocialLink["platform"]) => {
 
 export default function ProfileInfo({ profile }: Props) {
   return (
-    <section className="flex flex-col gap-4 mt-12 md:mt-16 mb-6 pl-0 md:pl-40">
+    <section className="flex flex-col gap-4 mt-12 md:mt-16 mb-6 pl-0">
       <div>
         <div className="flex gap-3 items-center">
           <h1 className="text-2xl font-semibold">{profile.name}</h1>
