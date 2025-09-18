@@ -34,19 +34,20 @@ export default function Navbar() {
   }, [userId]);
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto h-12 flex items-center justify-between">
-        <div className="bg-black h-full flex items-center px-6 py-2">
-          <img src={logo} alt="Lit" className="h-full w-auto" />
+      <div className="mx-auto h-12 flex items-center justify-between px-4 sm:px-6">
+        <div className="bg-black h-full flex items-center px-3 sm:px-6 py-2">
+          <img src={logo} alt="Lit" className="h-6 sm:h-8 w-auto" />
         </div>
-        <div className="flex items-center gap-2">
-          <Link to="/profiles">
+        <div className="flex items-center gap-1 sm:gap-2">
+          <Link to="/profiles" className="hidden sm:block">
             <Button variant="ghost" size="sm">
               Browse Profiles
             </Button>
           </Link>
           <Link to="/add-profile">
-            <Button variant="outline" size="sm">
-              Add Profile
+            <Button variant="outline" size="sm" className="text-xs sm:text-sm px-2 sm:px-3">
+              <span className="hidden sm:inline">Add Profile</span>
+              <span className="sm:hidden">Add</span>
             </Button>
           </Link>
           <div 
@@ -54,11 +55,11 @@ export default function Navbar() {
             onMouseEnter={() => setIsDropdownOpen(true)}
             onMouseLeave={() => setIsDropdownOpen(false)}
           >
-            <Button variant="ghost" className="flex items-center gap-2">
-              <Avatar className="w-7 h-7">
+            <Button variant="ghost" className="flex items-center gap-1 sm:gap-2 p-1 sm:p-2">
+              <Avatar className="w-6 h-6 sm:w-7 sm:h-7">
                 {loading ? (
                   <div className="w-full h-full bg-gray-200 animate-pulse rounded-full flex items-center justify-center">
-                    <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 bg-gray-400 rounded-full"></div>
                   </div>
                 ) : (
                   <>
@@ -68,27 +69,27 @@ export default function Navbar() {
                       }
                       alt={profile?.name || "User"}
                     />
-                    <AvatarFallback>{profile?.name?.[0] || "U"}</AvatarFallback>
+                    <AvatarFallback className="text-xs sm:text-sm">{profile?.name?.[0] || "U"}</AvatarFallback>
                   </>
                 )}
               </Avatar>
-              <span className="text-sm">
+              <span className="text-xs sm:text-sm hidden sm:inline">
                 {loading ? (
-                  <div className="w-16 h-4 bg-gray-200 animate-pulse rounded"></div>
+                  <div className="w-12 sm:w-16 h-3 sm:h-4 bg-gray-200 animate-pulse rounded"></div>
                 ) : (
                   profile?.name || "Account"
                 )}
               </span>
             </Button>
             {isDropdownOpen && (
-              <div className="absolute right-0 top-full pt-1 w-44 rounded-md border bg-popover p-1 shadow-md">
-                <Button variant="ghost" className="w-full justify-start">
+              <div className="absolute right-0 top-full pt-1 w-40 sm:w-44 rounded-md border bg-popover p-1 shadow-md">
+                <Button variant="ghost" className="w-full justify-start text-xs sm:text-sm">
                   Profile
                 </Button>
-                <Button variant="ghost" className="w-full justify-start">
+                <Button variant="ghost" className="w-full justify-start text-xs sm:text-sm">
                   Settings
                 </Button>
-                <Button variant="ghost" className="w-full justify-start">
+                <Button variant="ghost" className="w-full justify-start text-xs sm:text-sm">
                   Sign out
                 </Button>
               </div>
