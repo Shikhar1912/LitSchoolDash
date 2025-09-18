@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ExternalLink, MapPin, GraduationCap } from "lucide-react";
+import { ExternalLink, GraduationCap } from "lucide-react";
 import type { Profile } from "@/api/types";
 
 interface ProfileCardProps {
@@ -10,7 +9,10 @@ interface ProfileCardProps {
   onViewProfile: (profileId: string) => void;
 }
 
-export default function ProfileCard({ profile, onViewProfile }: ProfileCardProps) {
+export default function ProfileCard({
+  profile,
+  onViewProfile,
+}: ProfileCardProps) {
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -50,19 +52,19 @@ export default function ProfileCard({ profile, onViewProfile }: ProfileCardProps
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent className="pt-0">
         {profile.bio && (
           <p className="text-sm text-gray-600 mb-4 line-clamp-3">
             {profile.bio}
           </p>
         )}
-        
+
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Badge variant="secondary" className="text-xs">
+            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-600">
               Profile ID: {profile.id.slice(0, 8)}...
-            </Badge>
+            </span>
           </div>
           <Button
             onClick={() => onViewProfile(profile.id)}

@@ -1,6 +1,6 @@
 import { getMockProfileBundle } from "@/api/mock";
 import { supabase } from "@/lib/supabase";
-import type { ProfileBundle } from "@/api/types";
+import type { ProfileBundle, Profile } from "@/api/types";
 
 // Fetch real profile data by ID from Supabase
 export const fetchProfileBundleById = async (
@@ -210,15 +210,17 @@ export const fetchAllProfiles = async (): Promise<Profile[]> => {
       return [];
     }
 
-    return profiles?.map((profile) => ({
-      id: profile.id,
-      name: profile.name,
-      college: profile.college,
-      headline: profile.headline,
-      bio: profile.bio,
-      coverImageUrl: profile.cover_image_url,
-      avatarUrl: profile.avatar_url,
-    })) || [];
+    return (
+      profiles?.map((profile) => ({
+        id: profile.id,
+        name: profile.name,
+        college: profile.college,
+        headline: profile.headline,
+        bio: profile.bio,
+        coverImageUrl: profile.cover_image_url,
+        avatarUrl: profile.avatar_url,
+      })) || []
+    );
   } catch (error) {
     console.error("Error fetching profiles:", error);
     return [];

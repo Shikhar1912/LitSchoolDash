@@ -4,8 +4,7 @@ import { fetchAllProfiles, type Profile } from "@/api";
 import ProfileCard from "@/components/ProfileCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Search, Users, ArrowLeft } from "lucide-react";
 
 export default function ProfilesList() {
@@ -120,7 +119,10 @@ export default function ProfilesList() {
                 </p>
               </div>
             </div>
-            <Button onClick={handleAddProfile} className="flex items-center gap-2">
+            <Button
+              onClick={handleAddProfile}
+              className="flex items-center gap-2"
+            >
               <Plus className="h-4 w-4" />
               Add Profile
             </Button>
@@ -142,9 +144,10 @@ export default function ProfilesList() {
               />
             </div>
             <div className="flex items-center gap-4">
-              <Badge variant="outline" className="text-sm">
-                {filteredProfiles.length} profile{filteredProfiles.length !== 1 ? 's' : ''}
-              </Badge>
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-sm bg-gray-100 text-gray-600">
+                {filteredProfiles.length} profile
+                {filteredProfiles.length !== 1 ? "s" : ""}
+              </span>
             </div>
           </div>
         </div>
@@ -163,7 +166,10 @@ export default function ProfilesList() {
                   : "Be the first to create a student profile!"}
               </p>
               {!searchTerm && (
-                <Button onClick={handleAddProfile} className="flex items-center gap-2">
+                <Button
+                  onClick={handleAddProfile}
+                  className="flex items-center gap-2"
+                >
                   <Plus className="h-4 w-4" />
                   Create First Profile
                 </Button>
