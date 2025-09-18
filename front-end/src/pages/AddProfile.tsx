@@ -758,9 +758,27 @@ export default function AddProfile() {
       <div className="max-w-4xl mx-auto">
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl font-bold">
-              Add New Student Profile
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-2xl font-bold">
+                Add New Student Profile
+              </CardTitle>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => navigate("/profiles")}
+                >
+                  Browse Profiles
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => navigate("/")}
+                >
+                  Home
+                </Button>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="mb-6 text-center">

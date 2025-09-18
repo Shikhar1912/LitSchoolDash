@@ -38,6 +38,11 @@ export default function Navbar() {
           <img src={logo} alt="Lit" className="h-full w-auto" />
         </div>
         <div className="flex items-center gap-2">
+          <Link to="/profiles">
+            <Button variant="ghost" size="sm">
+              Browse Profiles
+            </Button>
+          </Link>
           <Link to="/add-profile">
             <Button variant="outline" size="sm">
               Add Profile

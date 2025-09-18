@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import {
   fetchProfileBundle,
   fetchProfileBundleById,
   type ProfileBundle,
 } from "@/api";
+import { Button } from "@/components/ui/button";
 import CoverImage from "../components/profile/CoverImage";
 import ProfileInfo from "../components/profile/ProfileInfo";
 import Experiences from "../components/profile/Experiences";
@@ -19,6 +20,7 @@ import Navbar from "../components/profile/Navbar";
 import Highlights from "../components/profile/Highlights";
 
 export default function Profile() {
+  const navigate = useNavigate();
   const [data, setData] = useState<ProfileBundle | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -67,7 +69,42 @@ export default function Profile() {
   if (error) {
     return <div className="p-4 text-red-600">{error}</div>;
   }
-  if (!data) return null;
+  if (!data) {
+    // Show welcome page when no profile ID is provided
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+          <div className="max-w-4xl mx-auto px-4 py-16">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                Welcome to LitSchoolDash
+              </h1>
+              <p className="text-xl text-gray-600 mb-8">
+                Discover and showcase student profiles, achievements, and experiences
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  onClick={() => navigate("/profiles")}
+                  size="lg"
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  Browse All Profiles
+                </Button>
+                <Button
+                  onClick={() => navigate("/add-profile")}
+                  variant="outline"
+                  size="lg"
+                >
+                  Create Your Profile
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

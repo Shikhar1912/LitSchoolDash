@@ -197,6 +197,34 @@ export const fetchProfileBundleById = async (
   }
 };
 
+// Fetch all profiles from Supabase
+export const fetchAllProfiles = async (): Promise<Profile[]> => {
+  try {
+    const { data: profiles, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Error fetching profiles:", error);
+      return [];
+    }
+
+    return profiles?.map((profile) => ({
+      id: profile.id,
+      name: profile.name,
+      college: profile.college,
+      headline: profile.headline,
+      bio: profile.bio,
+      coverImageUrl: profile.cover_image_url,
+      avatarUrl: profile.avatar_url,
+    })) || [];
+  } catch (error) {
+    console.error("Error fetching profiles:", error);
+    return [];
+  }
+};
+
 // Swappable data source. Replace implementations with real HTTP later.
 export const fetchProfileBundle = async (): Promise<ProfileBundle> => {
   return getMockProfileBundle();
