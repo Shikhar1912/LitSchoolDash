@@ -12,6 +12,7 @@ export default function Navbar() {
   const userId = searchParams.get("id");
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (userId) {
@@ -48,7 +49,11 @@ export default function Navbar() {
               Add Profile
             </Button>
           </Link>
-          <div className="relative group">
+          <div 
+            className="relative"
+            onMouseEnter={() => setIsDropdownOpen(true)}
+            onMouseLeave={() => setIsDropdownOpen(false)}
+          >
             <Button variant="ghost" className="flex items-center gap-2">
               <Avatar className="w-7 h-7">
                 {loading ? (
@@ -75,17 +80,19 @@ export default function Navbar() {
                 )}
               </span>
             </Button>
-            <div className="absolute right-0 mt-2 hidden w-44 rounded-md border bg-popover p-1 shadow-md group-hover:block">
-              <Button variant="ghost" className="w-full justify-start">
-                Profile
-              </Button>
-              <Button variant="ghost" className="w-full justify-start">
-                Settings
-              </Button>
-              <Button variant="ghost" className="w-full justify-start">
-                Sign out
-              </Button>
-            </div>
+            {isDropdownOpen && (
+              <div className="absolute right-0 top-full pt-1 w-44 rounded-md border bg-popover p-1 shadow-md">
+                <Button variant="ghost" className="w-full justify-start">
+                  Profile
+                </Button>
+                <Button variant="ghost" className="w-full justify-start">
+                  Settings
+                </Button>
+                <Button variant="ghost" className="w-full justify-start">
+                  Sign out
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
